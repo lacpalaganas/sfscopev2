@@ -10,7 +10,7 @@ const Home = () => {
         <SafeAreaView style={{ flex: 1, backgroundColor: COLORS.lightWhite }}>
             <StatusBar
        
-        backgroundColor="#61dafb"
+        backgroundColor="white"
         barStyle='dark-content'
         
       />

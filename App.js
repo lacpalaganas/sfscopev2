@@ -20,58 +20,63 @@ const Stack = createStackNavigator();
 function TabNavigator() {
   return (
     <Tab.Navigator
-      //initialRouteName="Home"
-      //barStyle={{ backgroundColor: COLORS.secondary}}
-      // activeColor= {COLORS.lightWhite}
-      // inactiveColor={COLORS.lightWhite}
-      
+    //initialRouteName="Home"
+    //barStyle={{ backgroundColor: COLORS.secondary}}
+    // activeColor= {COLORS.lightWhite}
+    // inactiveColor={COLORS.lightWhite}
+
     >
       <Tab.Screen name="SFScope" component={StackNavigator}
-      
+
         options={{
-          headerBackgroundContainerStyle:{backgroundColor: 'red'},
+          headerTitleAlign: 'center',
+          headerBackgroundContainerStyle: { backgroundColor: 'red' },
           backgroundColor: COLORS.primary,
           tabBarLabel: 'Home',
-         
+
           tabBarIcon: ({ color }) => (
             <MaterialCommunityIcons name="home" color={color} size={26} />
-          ),
-        }}
-      />
-      <Tab.Screen name="Events" component={Events}
-        options={{
-  
-
-          tabBarLabel: 'Events',
-          tabBarIcon: ({ color }) => (
-            <MaterialCommunityIcons name="calendar-month" color={color} size={26} />
           ),
         }}
       />
       <Tab.Screen name="What to do" component={WhatToDo}
         options={{
           tabBarLabel: 'What to do',
+          headerTitleAlign: 'center',
           tabBarIcon: ({ color }) => (
             <MaterialCommunityIcons name="message-question" color={color} size={26} />
           ),
         }}
       />
-       <Tab.Screen name="Rentals" component={RentalsStack}
+      <Tab.Screen name="Rentals" component={RentalsStack}
         options={{
           tabBarLabel: 'Rentals',
+          headerTitleAlign: 'center',
           unmountOnBlur: true,
           tabBarIcon: ({ color }) => (
             <MaterialCommunityIcons name="home-search" color={color} size={26} />
           ),
         }}
       />
+      <Tab.Screen name="Events" component={Events}
+        options={{
+
+          headerTitleAlign: 'center',
+          tabBarLabel: 'Events',
+          tabBarIcon: ({ color }) => (
+            <MaterialCommunityIcons name="calendar-month" color={color} size={26} />
+          ),
+        }}
+      />
+
+
     </Tab.Navigator>
   )
 }
 const RentalsStack = () => {
   return (
     <Stack.Navigator>
-      <Stack.Screen name="Search rentals" component={Rentals}  options={{
+      <Stack.Screen name="Search Rentals" component={Rentals} options={{
         headerStyle: { backgroundColor: COLORS.secondary },
         headerShadowVisible: false,
         headerTintColor: COLORS.lightWhite,
@@ -82,15 +87,15 @@ const RentalsStack = () => {
 
       }} />
       <Stack.Screen name="View Rentals" component={RentalDetails}
-       options={{
-        headerStyle: { backgroundColor: COLORS.secondary },
-        headerShadowVisible: false,
-        headerTintColor: COLORS.lightWhite,
-        // headerLeft: () => (<ScreenHeaderBtn iconUrl={icons.menu} dimension="60%"/>),
-        //headerRight: () => (<ScreenHeaderBtn iconUrl={images.compare} dimension="100%" handlePress={() => router.push(`/compare/`)}/>),
+        options={{
+          headerStyle: { backgroundColor: COLORS.secondary },
+          headerShadowVisible: false,
+          headerTintColor: COLORS.lightWhite,
+          // headerLeft: () => (<ScreenHeaderBtn iconUrl={icons.menu} dimension="60%"/>),
+          //headerRight: () => (<ScreenHeaderBtn iconUrl={images.compare} dimension="100%" handlePress={() => router.push(`/compare/`)}/>),
 
 
-      }}  />
+        }} />
     </Stack.Navigator>
   );
 };
@@ -98,37 +103,37 @@ const RentalsStack = () => {
 const StackNavigator = () => {
   return (
     <Stack.Navigator>
-      <Stack.Screen name="SFscope" component={Home} 
-      options={{
-        headerStyle: { backgroundColor: COLORS.secondary },
-        headerShadowVisible: false,
-        headerTintColor: COLORS.lightWhite,
-        headerShown: false
-        // headerLeft: () => (<ScreenHeaderBtn iconUrl={icons.menu} dimension="60%"/>),
-        //headerRight: () => (<ScreenHeaderBtn iconUrl={images.compare} dimension="100%" handlePress={() => router.push(`/compare/`)}/>),
+      <Stack.Screen name="SFscope" component={Home}
+        options={{
+          headerStyle: { backgroundColor: COLORS.secondary },
+          headerShadowVisible: false,
+          headerTintColor: COLORS.lightWhite,
+          headerShown: false
+          // headerLeft: () => (<ScreenHeaderBtn iconUrl={icons.menu} dimension="60%"/>),
+          //headerRight: () => (<ScreenHeaderBtn iconUrl={images.compare} dimension="100%" handlePress={() => router.push(`/compare/`)}/>),
 
 
-      }} 
+        }}
       />
-      
-       <Stack.Screen name="View Rentals" component={RentalDetails}
-       options={{
-        headerStyle: { backgroundColor: COLORS.secondary },
-        headerShadowVisible: false,
-        headerTintColor: COLORS.lightWhite,
-        // headerLeft: () => (<ScreenHeaderBtn iconUrl={icons.menu} dimension="60%"/>),
-        //headerRight: () => (<ScreenHeaderBtn iconUrl={images.compare} dimension="100%" handlePress={() => router.push(`/compare/`)}/>),
+
+      <Stack.Screen name="View Rentals" component={RentalDetails}
+        options={{
+          headerStyle: { backgroundColor: COLORS.secondary },
+          headerShadowVisible: false,
+          headerTintColor: COLORS.lightWhite,
+          // headerLeft: () => (<ScreenHeaderBtn iconUrl={icons.menu} dimension="60%"/>),
+          //headerRight: () => (<ScreenHeaderBtn iconUrl={images.compare} dimension="100%" handlePress={() => router.push(`/compare/`)}/>),
 
 
-      }}  />
-     
+        }} />
+
     </Stack.Navigator>
   )
 }
 
 export default function App() {
   return (
-    
+
     <NavigationContainer>
       <TabNavigator />
     </NavigationContainer>

@@ -36,7 +36,7 @@ const Carousel = () => {
         <View>
            <SliderBox 
               images={images}
-              sliderBoxHeight={200}
+              sliderBoxHeight={140}
               ImageComponentStyle={{borderRadius: 15, width: '90%', marginTop: 5, marginRight: 33, }}
               dotColor= {COLORS.tertiary}
               inactiveDotColor="#90A4AE"  
