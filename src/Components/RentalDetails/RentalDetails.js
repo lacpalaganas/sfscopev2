@@ -165,12 +165,20 @@ const RentalDetails = () => {
         // setFilteredDataSource(newData);
         // console.log(filteredDataSource);
     }, []);
+    const getData = () => {
+        axios.get("http://myneighborhoodscope.com/rentalApi.php")
+        .then(response => {
+            setFilteredDataSource(response.data.filter((item) =>
+                item.neighborhood === nhood && item.active == 1)); setMasterDataSource(response.data)
+        })
+        .catch(error => { });
+    }
     return (
         <SafeAreaView style={{ flex: 1, backgroundColor: COLORS.lightWhite }}>
             {/* <Text style={{ textAlign: 'center', padding: 10, fontSize: 21, fontWeight: 700 }}>{nhood} neighborhood</Text> */}
-            {/* <TouchableOpacity onPress={() => navigation.navigate(previousScreen)}>
-        <Text>Go Back</Text>
-      </TouchableOpacity> */}
+            <TouchableOpacity onPress={() => getData()}>
+        <Text>Refresh</Text>
+      </TouchableOpacity>
             {filteredDataSource.length != 0 ?
                 (
                     <View style={[styles.container, { padding: SIZES.small }]}>

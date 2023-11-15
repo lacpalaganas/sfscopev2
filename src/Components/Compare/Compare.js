@@ -152,7 +152,7 @@ const ExpandableListItem = ({ item }) => {
 
                         {
                             item.zipCodes.map((item, index) => (
-                                <Text style={styles.pointText}>{`${item}, `}</Text>
+                                <Text key={index} style={styles.pointText}>{`${item}, `}</Text>
                             ))}
                     </Text>
                     <Text style={styles.itemContentSubHeader}>
@@ -168,7 +168,7 @@ const ExpandableListItem = ({ item }) => {
 
                         {
                             item.arts.map((item, index) => (
-                                <Text style={styles.pointText}>{`- ${item}\n`}</Text>
+                                <Text key={index} style={styles.pointText}>{`- ${item}\n`}</Text>
                             ))}
                     </Text>
                     <Text style={styles.itemContentSubHeader}>
@@ -178,7 +178,7 @@ const ExpandableListItem = ({ item }) => {
 
                         {
                             item.restaurants.map((item, index) => (
-                                <Text style={styles.pointText}>{`- ${item}\n`}</Text>
+                                <Text  key={index} style={styles.pointText}>{`- ${item}\n`}</Text>
                             ))}
                     </Text>
                     <Text style={styles.itemContentSubHeader}>
@@ -188,7 +188,7 @@ const ExpandableListItem = ({ item }) => {
 
                         {
                             item.groceries.map((item, index) => (
-                                <Text style={styles.pointText}>{`- ${item}\n`}</Text>
+                                <Text  key={index} style={styles.pointText}>{`- ${item}\n`}</Text>
                             ))}
                     </Text>
                     <Text style={styles.itemContentSubHeader}>
@@ -198,7 +198,7 @@ const ExpandableListItem = ({ item }) => {
 
                         {
                             item.cafes.map((item, index) => (
-                                <Text style={styles.pointText}>{`- ${item}\n`}</Text>
+                                <Text  key={index} style={styles.pointText}>{`- ${item}\n`}</Text>
                             ))}
                     </Text>
                     <Text style={styles.itemContentSubHeader}>
@@ -208,7 +208,7 @@ const ExpandableListItem = ({ item }) => {
 
                         {
                             item.shopping.map((item, index) => (
-                                <Text style={styles.pointText}>{`- ${item}\n`}</Text>
+                                <Text  key={index} style={styles.pointText}>{`- ${item}\n`}</Text>
                             ))}
                     </Text>
                     <Text style={styles.itemContentSubHeader}>
@@ -218,7 +218,7 @@ const ExpandableListItem = ({ item }) => {
 
                         {
                             item.nightLife.map((item, index) => (
-                                <Text style={styles.pointText}>{`- ${item}\n`}</Text>
+                                <Text  key={index} style={styles.pointText}>{`- ${item}\n`}</Text>
                             ))}
                     </Text>
 
@@ -328,6 +328,7 @@ const ExpandableList = ({ data }) => {
         <><View>
             <FlatList
                 data={jobTypes}
+                initialNumToRender={5} 
                 renderItem={({ item }) => (
                     <TouchableOpacity
                         style={styles.tab(activeJobType, item)}
@@ -367,6 +368,8 @@ const ExpandableList = ({ data }) => {
                     <FlatList
                         data={filteredDataSource}
                         renderItem={renderItem}
+                        initialNumToRender={10} 
+                        removeClippedSubviews
                         keyExtractor={(item) => item.nhoodID.toString()}
                     />
                 ) : (
