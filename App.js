@@ -58,13 +58,13 @@ function TabNavigator() {
           ),
         }}
       />
-      <Tab.Screen name="Events" component={Events}
+      <Tab.Screen name="Ads" component={Events}
         options={{
 
           headerTitleAlign: 'center',
-          tabBarLabel: 'Events',
+          tabBarLabel: 'Ads',
           tabBarIcon: ({ color }) => (
-            <MaterialCommunityIcons name="calendar-month" color={color} size={26} />
+            <MaterialCommunityIcons name="advertisements" color={color} size={26} />
           ),
         }}
       />
@@ -87,6 +87,7 @@ const RentalsStack = () => {
 
       }} />
       <Stack.Screen name="View Rentals" component={RentalDetails}
+      r
         options={{
           headerStyle: { backgroundColor: COLORS.secondary },
           headerShadowVisible: false,

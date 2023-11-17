@@ -1,7 +1,7 @@
 {
   "expo": {
-    "name": "sfscopeV2",
-    "slug": "sfscopeV2",
+    "name": "SFScope",
+    "slug": "sfscope",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
@@ -15,16 +15,23 @@
       "**/*"
     ],
     "ios": {
-      "supportsTablet": true
+      "supportsTablet": true,
+      "bundleIdentifier": "com.myneighborhood.scope"
     },
     "android": {
       "adaptiveIcon": {
-        "foregroundImage": "./assets/adaptive-icon.png",
+        "foregroundImage": "./assets/splash.png",
         "backgroundColor": "#ffffff"
-      }
+      },
+      "package": "com.myneighborhood.scope"
     },
     "web": {
       "favicon": "./assets/favicon.png"
+    },
+    "extra": {
+      "eas": {
+        "projectId": "5472d92f-bcd8-4ae7-93eb-7e6cbbde120f"
+      }
     }
   }
 }

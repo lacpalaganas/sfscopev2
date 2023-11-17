@@ -1,4 +1,4 @@
-import { View, Text, StyleSheet, SafeAreaView, FlatList, TouchableOpacity, Linking, Image } from 'react-native'
+import { View, Text, StyleSheet, SafeAreaView, FlatList, TouchableOpacity, Linking, Image, ActivityIndicator } from 'react-native'
 import { React, useEffect, useState } from 'react'
 import { COLORS, SIZES } from '../../../constants'
 import { useRoute } from '@react-navigation/native';
@@ -120,6 +120,8 @@ const ExpandableRentalsItem = ({ item }) => {
                         horizontal
                         data={images}
                         renderItem={renderImage}
+                        keyExtractor={(item) => item.id }
+                        key={(item) => item.id }
 
                     />
                     <Text style={{ textAlign: 'center', fontStyle: 'italic', marginTop: 5, fontSize: 10 }}>
@@ -133,53 +135,92 @@ const ExpandableRentalsItem = ({ item }) => {
     );
 };
 const RentalDetails = () => {
+    const renderItem = ({ item }) => (
+        <ExpandableRentalsItem item={item} />
+    );
+    const [isLoading, setIsLoading] = useState(false);
+    const [filteredDataSource, setFilteredDataSource] = useState([]);
+    const [masterDataSource, setMasterDataSource] = useState([]);
     const route = useRoute();
     const { nhood } = route.params;
     const { previousScreen } = route.params;
     const navigation = useNavigation();
     const changeTitle = () => {
         navigation.setOptions({
-          title: nhood + " Rentals", // Set your dynamic title here
-    
-        });
-      };
+            title: nhood + " Rentals", // Set your dynamic title here
 
-    const [filteredDataSource, setFilteredDataSource] = useState([]);
-    const [masterDataSource, setMasterDataSource] = useState([]);
-    const renderItem = ({ item }) => (
-        <ExpandableRentalsItem item={item} />
-    );
+        });
+    };
+
+    
     useEffect(() => {
         //console.log(previousScreen);
         changeTitle();
-        axios.get("http://myneighborhoodscope.com/rentalApi.php")
-            .then(response => {
-                setFilteredDataSource(response.data.filter((item) =>
-                    item.neighborhood === nhood && item.active == 1)); setMasterDataSource(response.data)
-            })
-            .catch(error => { });
-
+        // axios.get("http://myneighborhoodscope.com/rentalApi.php")
+        //     .then(response => {
+        //         setFilteredDataSource(response.data.filter((item) =>
+        //             item.neighborhood === nhood && item.active == 1)); setMasterDataSource(response.data)
+        //     })
+        //     .catch(error => { });
+        //getData();
         // var newData = masterDataSource;
         // newData = masterDataSource.filter((item) =>
         //     item.neighborhood === nhood);
         // setFilteredDataSource(newData);
         // console.log(filteredDataSource);
+        const fetchData = async () => {
+            try {
+                setIsLoading(true);
+              const response = await fetch('https://myneighborhoodscope.com/rentalApi.php');
+              const data = await response.json();
+              
+              var newData = data.filter((item) =>
+              item.neighborhood == nhood.toString() && item.active == 1);
+              setFilteredDataSource(newData);
+              console.log(newData);
+              setIsLoading(false);
+            } catch (error) {
+              console.error('Error fetching data: ', error);
+            }
+          };
+          fetchData();
     }, []);
-    const getData = () => {
-        axios.get("http://myneighborhoodscope.com/rentalApi.php")
-        .then(response => {
-            setFilteredDataSource(response.data.filter((item) =>
-                item.neighborhood === nhood && item.active == 1)); setMasterDataSource(response.data)
-        })
-        .catch(error => { });
+    const getData = async () => {
+        setIsLoading(true);
+        const result = await axios.get("https://myneighborhoodscope.com/rentalApi.php")
+            .then(response => {
+                setMasterDataSource(response.data);
+                setIsLoading(false);
+                var newData = masterDataSource;
+                newData = masterDataSource; 
+                setFilteredDataSource(response.data.filter((item) =>
+                            item.neighborhood == nhood && item.active == 1));
+            })
+            .catch(error => { });
+          
+        console.log("getData");
     }
     return (
         <SafeAreaView style={{ flex: 1, backgroundColor: COLORS.lightWhite }}>
-            {/* <Text style={{ textAlign: 'center', padding: 10, fontSize: 21, fontWeight: 700 }}>{nhood} neighborhood</Text> */}
-            <TouchableOpacity onPress={() => getData()}>
-        <Text>Refresh</Text>
-      </TouchableOpacity>
-            {filteredDataSource.length != 0 ?
+            <View style={{ alignItems: 'center',
+        justifyContent: 'center'}}>
+             <View style={{  width: '80%', padding: 10, backgroundColor: '#007BFF', marginTop: 20, borderWidth: 1, borderColor: '007BFF', borderRadius: 6 }}>
+            <TouchableOpacity onPress={() => {
+             getData()
+            }}>
+              <Text style={{ color: "white", textAlign: 'center', fontSize: 14 }}> {`Refresh`}</Text>
+            </TouchableOpacity>
+
+          </View>
+          </View>
+            {/* <TouchableOpacity onPress={() => getData()}>
+                <Text>Refresh</Text>
+            </TouchableOpacity> */}
+            {isLoading ? (
+                 <View style={{ justifyContent: 'center', height: '100%', }}>
+                <ActivityIndicator size='large' color={COLORS.primary} /> 
+             </View>
+            ):filteredDataSource.length != 0 ?
                 (
                     <View style={[styles.container, { padding: SIZES.small }]}>
 
