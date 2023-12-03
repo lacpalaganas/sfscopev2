@@ -2,9 +2,9 @@
   "expo": {
     "name": "SFScope",
     "slug": "sfscope",
-    "version": "1.0.0",
+    "version": "3.1.0",
     "orientation": "portrait",
-    "icon": "./assets/icon.png",
+    "icon": "./assets/appstore.png",
     "userInterfaceStyle": "light",
     "splash": {
       "image": "./assets/splash.png",
@@ -16,7 +16,7 @@
     ],
     "ios": {
       "supportsTablet": true,
-      "bundleIdentifier": "com.myneighborhood.scope"
+      "bundleIdentifier": "com.myneighborhoodscope.sfscope"
     },
     "android": {
       "adaptiveIcon": {
