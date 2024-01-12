@@ -58,7 +58,7 @@ const ExpandableRentalsItem = ({ item }) => {
                 style={styles.itemTouchable}
             >
                 <Text style={styles.itemTitle}>
-                    {`${item.title1} | ${item.price}`} <Text style={{ fontSize: 13, fontStyle: 'italic', color: COLORS.gray }}>{expanded ? 'see less..' : 'see more..'}</Text>
+                    {`${item.title1} | ${item.price}\n`} <Text style={{ fontSize: 13, fontStyle: 'italic', color: COLORS.gray }}>{expanded ? 'see less..' : 'see more..'}</Text>
                     {/* <Entypo name={expanded ? 'chevron-down' : 'chevron-right'} size={14} color="black" /> */}
 
                 </Text>

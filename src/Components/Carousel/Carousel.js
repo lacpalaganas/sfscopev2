@@ -20,7 +20,7 @@ const Carousel = () => {
     
             const response = await axios.request(options);
             //response = response.data.map(item => item.image);
-            setImages(response.data.filter(item => item.frontpage === 1).map(item => item.image));
+            setImages(response.data.filter(item => item.frontpage === 1 && item.active === 1).map(item => item.image));
            
            
         } catch (error) {

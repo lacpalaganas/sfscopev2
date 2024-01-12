@@ -9,6 +9,153 @@ import { Entypo } from '@expo/vector-icons';
 import { useNavigation } from '@react-navigation/native'
 import ViewDetailsOverlay from "../Modal/ViewDetailsOverlay";
 
+
+const DetailsScreen = ({ route }) => {
+    const { item } = route.params;
+    const [nhoodDetails, setNhoodDetails] = useState([]);
+    const navigation = useNavigation()
+
+    useEffect(() => {
+        setNhoodDetails(item);
+        console.log(nhoodDetails);
+    }, []);
+    return (
+        <ScrollView style={styles.itemContainer}>
+            <Text style={{ color: 'blue', fontSize: 15, marginTop: 6, fontWeight: 600 }}
+                onPress={() =>
+                    Linking.openURL(`${item.webLink}`)}>
+                Link: {item.nhood}
+            </Text>
+            <Text style={styles.itemContentSubHeader}>
+                Walk Score
+            </Text >
+            <Text style={styles.itemContent}>
+                {item.walk}
+            </Text>
+            <Text style={styles.itemContentSubHeader}>
+                Bike Score
+            </Text >
+            <Text style={styles.itemContent}>
+                {item.bike}
+            </Text>
+            <Text style={styles.itemContentSubHeader}>
+                Transit Score
+            </Text >
+            <Text style={styles.itemContent}>
+                {item.transit}
+            </Text>
+            <Text style={styles.itemContentSubHeader}>
+                Median Rent
+            </Text>
+            <Text style={{ marginTop: 10, fontSize: 14, color: "blue", }}
+                onPress={() =>
+                    //Linking.openURL(`https://sfbay.craigslist.org/search/sfc/apa?query=${item.nhood}`)}
+                    navigation.navigate('View Rentals', {
+                        nhood: item.nhood,
+                        previousScreen: "SFScope"
+                    })}>
+                {item.rent}
+            </Text>
+            <Text style={styles.itemContentSubHeader}>
+                Travel to Downtown
+            </Text >
+            <Text style={styles.itemContent}>
+                {item.ttd}
+            </Text>
+            <Text style={styles.itemContentSubHeader}>
+                Zipcodes
+            </Text>
+            <Text style={styles.itemContent}>
+                {
+                      item.zipCodes.length != 0 ?
+                    item.zipCodes.map((items, index) => (
+                        <Text key={index} style={styles.pointText}>{`${items}, `}</Text>
+                    )) :  <Text>-</Text>
+                }
+            </Text>
+            <Text style={styles.itemContentSubHeader}>
+                Description
+            </Text>
+            <Text style={styles.itemContent}>
+                {item.desc}
+            </Text>
+            <Text style={styles.itemContentSubHeader}>
+                Arts
+            </Text>
+            <Text style={styles.itemContent}>
+
+                {
+                    item.arts.length != 0 ?
+                    item.arts.map((item, index) => (
+                        <Text key={index} style={styles.pointText}>{`- ${item}\n`}</Text>
+                    )) :  <Text>-</Text>
+                }
+            </Text>
+            <Text style={styles.itemContentSubHeader}>
+                Restaurants
+            </Text>
+            <Text style={styles.itemContent}>
+
+                {
+                    item.restaurants.length != 0 ?
+                    item.restaurants.map((item, index) => (
+                        <Text key={index} style={styles.pointText}>{`- ${item}\n`}</Text>
+                    )) :  <Text>-</Text>
+                }
+            </Text>
+            <Text style={styles.itemContentSubHeader}>
+                Groceries
+            </Text>
+            <Text style={styles.itemContent}>
+
+                {
+                    item.groceries.length != 0 ?
+                    item.groceries.map((item, index) => (
+                        <Text key={index} style={styles.pointText}>{`- ${item}\n`}</Text>
+                    )) :  <Text>-</Text>
+                }
+            </Text>
+            <Text style={styles.itemContentSubHeader}>
+                Cafes
+            </Text>
+            <Text style={styles.itemContent}>
+
+                {
+                    item.cafes.length != 0 ?
+                    item.cafes.map((item, index) => (
+                        <Text key={index} style={styles.pointText}>{`- ${item}\n`}</Text>
+                    )) :  <Text>-</Text>
+                }
+            </Text>
+            <Text style={styles.itemContentSubHeader}>
+                Shopping
+            </Text>
+            <Text style={styles.itemContent}>
+
+                {
+                    item.shopping.length != 0 ?
+                    item.shopping.map((item, index) => (
+                        <Text key={index} style={styles.pointText}>{`- ${item}\n`}</Text>
+                    )) :  <Text>-</Text>
+                }
+            </Text>
+            <Text style={styles.itemContentSubHeader}>
+                Night life
+            </Text>
+            <Text style={styles.itemContent}>
+
+                {
+                      item.nightLife.length != 0 ?
+                    item.nightLife.map((item, index) => (
+                        <Text key={index} style={styles.pointText}>{`- ${item}\n`}</Text>
+                    ))  :  <Text>-</Text>
+                }
+            </Text>
+            <Text>{`\n`}</Text>
+        </ScrollView>
+    );
+};
+
 const ExpandableListItem = ({ item }) => {
     const [expanded, setExpanded] = useState(false);
     const navigation = useNavigation()
@@ -18,7 +165,7 @@ const ExpandableListItem = ({ item }) => {
     // const [expandedRentals, setExpandedRentals] = useState(false);
     // const [filteredDataSource, setFilteredDataSource] = useState([]);
     // const [masterDataSource, setMasterDataSource] = useState([]);
-   
+
     // useEffect(() => {
     //     axios.get("http://myneighborhoodscope.com/rentalApi.php")
     //         .then(response => { setFilteredDataSource(response.data); setMasterDataSource(response.data) })
@@ -39,7 +186,7 @@ const ExpandableListItem = ({ item }) => {
     // const onAddSticker = () => {
     //     setIsModalVisible(true);
     //   };
-    
+
     //   const onModalClose = () => {
     //     setIsModalVisible(false);
     //   };
@@ -53,7 +200,7 @@ const ExpandableListItem = ({ item }) => {
                     {item.nhood} <Entypo name={expanded ? 'chevron-down' : 'chevron-right'} size={14} color="black" />
 
                 </Text>
-            
+
 
             </TouchableOpacity>
             {expanded && (
@@ -90,14 +237,14 @@ const ExpandableListItem = ({ item }) => {
                             navigation.navigate('View Rentals', {
                                 nhood: item.nhood,
                                 previousScreen: "SFScope"
-                              })}
-                        
+                            })}
+
                     >
                         {item.rent}
                     </Text>
 
 
-{/* 
+                    {/* 
                     {!expandedRentals && (
                         <Text style={{ marginTop: 10, fontSize: 14, color: "blue", }}
                             onPress={() =>
@@ -138,7 +285,7 @@ const ExpandableListItem = ({ item }) => {
                             />
                         </View>
                     )} */}
-                   
+
                     <Text style={styles.itemContentSubHeader}>
                         Travel to Downtown
                     </Text >
@@ -178,7 +325,7 @@ const ExpandableListItem = ({ item }) => {
 
                         {
                             item.restaurants.map((item, index) => (
-                                <Text  key={index} style={styles.pointText}>{`- ${item}\n`}</Text>
+                                <Text key={index} style={styles.pointText}>{`- ${item}\n`}</Text>
                             ))}
                     </Text>
                     <Text style={styles.itemContentSubHeader}>
@@ -188,7 +335,7 @@ const ExpandableListItem = ({ item }) => {
 
                         {
                             item.groceries.map((item, index) => (
-                                <Text  key={index} style={styles.pointText}>{`- ${item}\n`}</Text>
+                                <Text key={index} style={styles.pointText}>{`- ${item}\n`}</Text>
                             ))}
                     </Text>
                     <Text style={styles.itemContentSubHeader}>
@@ -198,7 +345,7 @@ const ExpandableListItem = ({ item }) => {
 
                         {
                             item.cafes.map((item, index) => (
-                                <Text  key={index} style={styles.pointText}>{`- ${item}\n`}</Text>
+                                <Text key={index} style={styles.pointText}>{`- ${item}\n`}</Text>
                             ))}
                     </Text>
                     <Text style={styles.itemContentSubHeader}>
@@ -208,7 +355,7 @@ const ExpandableListItem = ({ item }) => {
 
                         {
                             item.shopping.map((item, index) => (
-                                <Text  key={index} style={styles.pointText}>{`- ${item}\n`}</Text>
+                                <Text key={index} style={styles.pointText}>{`- ${item}\n`}</Text>
                             ))}
                     </Text>
                     <Text style={styles.itemContentSubHeader}>
@@ -218,7 +365,7 @@ const ExpandableListItem = ({ item }) => {
 
                         {
                             item.nightLife.map((item, index) => (
-                                <Text  key={index} style={styles.pointText}>{`- ${item}\n`}</Text>
+                                <Text key={index} style={styles.pointText}>{`- ${item}\n`}</Text>
                             ))}
                     </Text>
 
@@ -272,7 +419,7 @@ const ExpandableList = ({ data }) => {
                 break;
             case "":
             default:
-                //alert("N/A");
+                //alert("-");
                 setFilteredDataSource(masterDataSource);
                 break;
         }
@@ -323,12 +470,27 @@ const ExpandableList = ({ data }) => {
         }
     };
 
+    const navigation = useNavigation();
+    const [selectedItem, setSelectedItem] = useState(null);
+    const handleItemPress = (item) => {
+        setSelectedItem(item);
+    };
+
+    const handleBack = () => {
+        setSelectedItem(null);
+    };
 
     return (
-        <><View>
-            <FlatList
+        <>
+       
+        <View>
+           
+          {
+                !selectedItem && (
+                    <View>
+    <FlatList
                 data={jobTypes}
-                initialNumToRender={5} 
+                initialNumToRender={5}
                 renderItem={({ item }) => (
                     <TouchableOpacity
                         style={styles.tab(activeJobType, item)}
@@ -353,9 +515,7 @@ const ExpandableList = ({ data }) => {
 
 
             />
-        </View>
-
-            <TextInput
+               <TextInput
                 style={styles.textInputStyle}
                 onChangeText={(text) => searchFilterFunction(text)}
                 value={search}
@@ -363,19 +523,47 @@ const ExpandableList = ({ data }) => {
                 placeholder="Search..."
                 placeholderTextColor={COLORS.gray2}
             />
+                </View>)
+            }
+        </View>
+  
+         
+          
             {search.length != 0 || activeJobType != "" ?
-                (
-                    <FlatList
+
+
+                selectedItem ?
+                    (<DetailsScreen route={{ params: { item: selectedItem } }} />)
+                    :
+                    (<FlatList
                         data={filteredDataSource}
-                        renderItem={renderItem}
-                        initialNumToRender={10} 
+                        //renderItem={renderItem}
+                        renderItem={({ item }) => (
+                            <View style={styles.itemContainer}>
+                                <TouchableOpacity style={styles.itemTouchable} onPress={() => handleItemPress(item)}>
+                                    <Text>{item.nhood}</Text>
+                                </TouchableOpacity>
+                            </View>
+
+                        )}
+                        initialNumToRender={10}
                         removeClippedSubviews
                         keyExtractor={(item) => item.nhoodID.toString()}
-                    />
-                ) : (
-                    <Text style={{ fontSize: SIZES.small, textAlign: 'center' }}>Search or filter to populate data</Text>
-                )
+                    />)
+
+
+                :
+                <Text style={{ fontSize: SIZES.small, textAlign: 'center' }}>Search or filter to populate data</Text>
+
             }
+              {selectedItem && (
+                <TouchableOpacity onPress={handleBack}>
+                      <Text style={[styles.itemTitle]}>
+                    <Entypo name={ 'chevron-left' } size={14} color="black" /> Go Back
+
+                </Text>
+                </TouchableOpacity>
+            )}
 
         </>
     );
