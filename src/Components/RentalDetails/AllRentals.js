@@ -20,7 +20,7 @@ import { ScrollView } from "react-native-gesture-handler";
 import { useNavigation } from "@react-navigation/native";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 import AsyncStorage from "@react-native-async-storage/async-storage";
-import { fetchRentalsByID } from "../../API/api";
+import { fetchAllRentals } from "../../API/api";
 
 // Function to render each image
 const renderImage = ({ item }) => (
@@ -141,23 +141,23 @@ const ExpandableRentalsItem = ({ item, showFavorite, userId }) => {
             Parking: <Text style={styles.itemContent}>{item.parking}</Text>
           </Text>
           {/* <View>
-                    <SliderBox
-                        images={images}
-                        sliderBoxHeight={200}
-                        ImageComponentStyle={{ borderRadius: 15, width: '90%', marginTop: 5, marginRight: 33, }}
-                        dotColor={COLORS.tertiary}
-                        inactiveDotColor="#90A4AE"
-                        onCurrentImagePressed={index => Linking.openURL(`${images[index]}`)}
-                        paginationBoxVerticalPadding={10}
-
-                        autoplay
-                        circleLoop
-
-                    />
-                    </View> */}
+                      <SliderBox
+                          images={images}
+                          sliderBoxHeight={200}
+                          ImageComponentStyle={{ borderRadius: 15, width: '90%', marginTop: 5, marginRight: 33, }}
+                          dotColor={COLORS.tertiary}
+                          inactiveDotColor="#90A4AE"
+                          onCurrentImagePressed={index => Linking.openURL(`${images[index]}`)}
+                          paginationBoxVerticalPadding={10}
+  
+                          autoplay
+                          circleLoop
+  
+                      />
+                      </View> */}
           {/* <Image source={{ uri: "https://buffer.com/cdn-cgi/image/w=1000,fit=contain,q=90,f=auto/library/content/images/size/w1200/2023/10/free-images.jpg" }}
-                                    style={styles.image}
-                                /> */}
+                                      style={styles.image}
+                                  /> */}
 
           <FlatList
             horizontal
@@ -181,7 +181,7 @@ const ExpandableRentalsItem = ({ item, showFavorite, userId }) => {
     </View>
   );
 };
-const RentalDetails = () => {
+const AllRentals = () => {
   const renderItem = ({ item }) => (
     <ExpandableRentalsItem
       item={item}
@@ -198,11 +198,7 @@ const RentalDetails = () => {
   const navigation = useNavigation();
   const [isLoggedIn, setLoggedIn] = useState(false);
   const [userId, setUserId] = useState("");
-  const changeTitle = () => {
-    navigation.setOptions({
-      title: nhood + " Rentals", // Set your dynamic title here
-    });
-  };
+
   const checkLoginStatus = async () => {
     try {
       const statusSession = await AsyncStorage.getItem("isLoggedIn");
@@ -219,7 +215,6 @@ const RentalDetails = () => {
     }
   };
   useEffect(() => {
-    changeTitle();
     checkLoginStatus();
     fetchData();
   }, []);
@@ -227,7 +222,7 @@ const RentalDetails = () => {
   const fetchData = async () => {
     try {
       setIsLoading(true);
-      const data = await fetchRentalsByID(nhood);
+      const data = await fetchAllRentals();
       setFilteredDataSource(data);
       setIsLoading(false);
     } catch (error) {
@@ -248,32 +243,6 @@ const RentalDetails = () => {
           </Text>
         </TouchableOpacity>
       </View>
-      <View style={{ alignItems: "center", justifyContent: "center" }}>
-        <TouchableOpacity
-          style={styles.refreshButton}
-          onPress={() => {
-            navigation.navigate("All Rentals", {});
-          }}
-        >
-          <Text style={{ color: "white", textAlign: "center", fontSize: 14 }}>
-            View All Rentals
-          </Text>
-        </TouchableOpacity>
-      </View>
-      <View style={{ alignItems: "center", justifyContent: "center" }}>
-        <TouchableOpacity
-          style={styles.refreshButton}
-          onPress={() => {
-            Linking.openURL(
-              `https://sfbay.craigslist.org/search/sfc/apa?query=${nhood}`
-            );
-          }}
-        >
-          <Text style={{ color: "white", textAlign: "center", fontSize: 14 }}>
-            Craiglist listings
-          </Text>
-        </TouchableOpacity>
-      </View>
 
       {isLoading ? (
         <View style={styles.vwMainArea}>
@@ -285,17 +254,16 @@ const RentalDetails = () => {
             data={filteredDataSource}
             renderItem={renderItem}
             keyExtractor={(item) => item.id}
+            key={(item) => item.id}
           />
         </View>
       ) : (
         <View style={styles.vwMainArea}>
-          <Text style={{ textAlign: "center" }}>
-            No available rentals for {nhood}
-          </Text>
+          <Text style={{ textAlign: "center" }}>No rentals found.</Text>
         </View>
       )}
     </SafeAreaView>
   );
 };
 
-export default RentalDetails;
+export default AllRentals;

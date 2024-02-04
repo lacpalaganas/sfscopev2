@@ -26,7 +26,7 @@ const styles = StyleSheet.create({
     overflow: "hidden",
   },
   itemTitle: {
-    fontSize: 18,
+    fontSize: 15,
     fontWeight: "bold",
     color: "#333",
   },
@@ -75,6 +75,36 @@ const styles = StyleSheet.create({
     //resizeMode: "cover",
     borderRadius: 5,
     margin: 5,
+  },
+
+  container: {
+    flex: 1,
+    backgroundColor: "#fff",
+    padding: 10,
+  },
+  roundedContainer: {
+    backgroundColor: "#fff",
+    padding: 20,
+    borderRadius: 15, // Adjust borderRadius value for desired curve
+    shadowColor: "#ddd",
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.5,
+    shadowRadius: 4,
+  },
+  safeArea: {
+    flex: 1,
+    backgroundColor: COLORS.lightWhite,
+  },
+  refreshButton: {
+    width: "90%",
+    padding: 18,
+    backgroundColor: COLORS.primary,
+    marginTop: 10,
+    borderRadius: SIZES.small / 2,
+  },
+  vwMainArea: {
+    justifyContent: "center",
+    height: "100%",
   },
 });
 

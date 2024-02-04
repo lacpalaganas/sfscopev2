@@ -15,34 +15,35 @@ import Compare from "../../Components/Compare/Compare";
 import Profile from "../Profile/Profile";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 
-const LoginModal = ({ isVisible, isLoggedIn, onLoginSuccess }) => {
-  const closeModal = () => {
-    // Optionally, add logic to prevent closing the modal without login
-    //console.warn('Please log in to access the app.');
-  };
-  const handleLoginSuccess = (username) => {
-    // Perform actions related to a successful login
-    console.log("Login successful ");
-    closeModal(); // Close the modal after successful login
-    onLoginSuccess();
-  };
-  return (
-    <View>
-      <Modal
-        onBackdropPress={closeModal}
-        animationType="slide"
-        transparent={true}
-        visible={isVisible}
-      >
-        <View style={styles.centeredView2}>
-          <View style={styles.modalView}>
-            <Profile onLoginSuccess={handleLoginSuccess} />
-          </View>
-        </View>
-      </Modal>
-    </View>
-  );
-};
+// const LoginModal = ({ isVisible, isLoggedIn, onLoginSuccess }) => {
+//   const closeModal = () => {
+//     // Optionally, add logic to prevent closing the modal without login
+//     //console.warn('Please log in to access the app.');
+//   };
+//   const handleLoginSuccess = (username) => {
+//     // Perform actions related to a successful login
+//     console.log("Login successful ");
+//     closeModal(); // Close the modal after successful login
+//     onLoginSuccess();
+//   };
+//   return (
+//     <View>
+//       <Modal
+//         onBackdropPress={closeModal}
+//         animationType="slide"
+//         transparent={true}
+//         visible={isVisible}
+//       >
+//         <View style={styles.centeredView2}>
+//           <View style={styles.modalView}>
+//             <Profile onLoginSuccess={handleLoginSuccess} />
+//           </View>
+//         </View>
+//       </Modal>
+//     </View>
+//   );
+// };
+
 const Home = () => {
   const navigation = useNavigation();
   const [isModalVisible, setModalVisible] = useState(true);
@@ -53,21 +54,21 @@ const Home = () => {
     setModalVisible(false);
   };
 
-  useEffect(() => {
-    const checkLoginStatus = async () => {
-      try {
-        const status = await AsyncStorage.getItem("isLoggedIn");
-        setLoggedIn(status === "true");
-        if (status === "true") {
-          setModalVisible(false);
-        }
-      } catch (error) {
-        console.error("Error reading login status from AsyncStorage:", error);
-      }
-    };
+  // useEffect(() => {
+  //   const checkLoginStatus = async () => {
+  //     try {
+  //       const status = await AsyncStorage.getItem("isLoggedIn");
+  //       setLoggedIn(status === "true");
+  //       if (status !== "true") {
+  //         setModalVisible(false);
+  //       }
+  //     } catch (error) {
+  //       console.error("Error reading login status from AsyncStorage:", error);
+  //     }
+  //   };
 
-    checkLoginStatus();
-  }, []); // The empty
+  //   checkLoginStatus();
+  // }, []); // The empty
 
   return (
     <SafeAreaView style={{ flex: 1, backgroundColor: COLORS.lightWhite }}>
@@ -86,10 +87,10 @@ const Home = () => {
         </Text>
         <Compare />
       </View>
-      <LoginModal
+      {/* <LoginModal
         isVisible={isModalVisible}
         onLoginSuccess={() => setModalVisible(false)}
-      />
+      /> */}
     </SafeAreaView>
   );
 };

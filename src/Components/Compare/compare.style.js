@@ -10,7 +10,7 @@ const styles = StyleSheet.create({
   },
   item: {
     width: "50%", // is 50% of container width
-    padding: SIZES.medium,
+    padding: SIZES.small,
   },
   itemContainer: {
     marginBottom: 15,

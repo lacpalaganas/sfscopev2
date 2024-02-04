@@ -10,7 +10,7 @@ const styles = StyleSheet.create({
   },
   item: {
     width: "50%", // is 50% of container width
-    padding: SIZES.medium,
+    padding: SIZES.small,
   },
   itemContainer: {
     marginBottom: 15,
@@ -76,6 +76,27 @@ const styles = StyleSheet.create({
     resizeMode: "contain",
     borderRadius: 5,
     margin: 0,
+  },
+  safeArea: {
+    flex: 1,
+    backgroundColor: COLORS.lightWhite,
+  },
+  viewCenter: {
+    height: "100%",
+    alignItems: "center",
+    marginTop: "30%",
+  },
+  button: {
+    width: "90%",
+    padding: 18,
+    backgroundColor: COLORS.primary,
+    marginTop: 10,
+    borderRadius: SIZES.small / 2,
+  },
+  buttonContent: {
+    flexDirection: "row",
+    alignItems: "center",
+    // justifyContent: 'center',
   },
 });
 

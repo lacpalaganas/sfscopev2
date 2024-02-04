@@ -17,11 +17,18 @@ import { createStackNavigator } from "@react-navigation/stack";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 
-const ViewProfile = () => {
+const ViewProfile = ({ onSignOut }) => {
   const [userEmail, setUserEmail] = useState(null);
 
   const handleSignOutPress = async () => {
-    await AsyncStorage.setItem("isLoggedIn", "false");
+    try {
+      await AsyncStorage.setItem("isLoggedIn", "false");
+      await AsyncStorage.setItem("userEmail", "");
+      await AsyncStorage.setItem("userID", "");
+      onSignOut(); // Notify the parent component about the logout
+    } catch (error) {
+      console.error("Error setting login status to AsyncStorage:", error);
+    }
   };
 
   useEffect(() => {
@@ -41,56 +48,48 @@ const ViewProfile = () => {
   }, []);
 
   return (
-    <SafeAreaView style={styles.safeArea}>
-      <View style={styles.viewCenter}>
-        <MaterialCommunityIcons
-          style={{ marginBottom: 5 }}
-          name="account-circle"
-          color={COLORS.blue}
-          size={80}
-        />
-        <Text style={{ marginBottom: 10, color: COLORS.primary }}>
-          Hi, {userEmail}
-        </Text>
-        <TouchableOpacity style={styles.rentalsButton} onPress={{}}>
-          <View style={styles.buttonContent}>
-            <MaterialCommunityIcons
-              style={{ marginRight: 8 }}
-              name="heart"
-              color={COLORS.white}
-              size={20}
-            />
-            <Text
-              style={{
-                color: "white",
-                textAlign: "left",
-                fontSize: 14,
-                fontWeight: "bold",
-              }}
-            >
-              {" "}
-              My favorite rentals
-            </Text>
-          </View>
-        </TouchableOpacity>
-        <TouchableOpacity
-          style={[styles.logoutButton, { backgroundColor: COLORS.blue }]}
-          onPress={handleSignOutPress}
-        >
+    <>
+      <Text style={{ marginBottom: 10, color: COLORS.primary }}>
+        Hi, {userEmail}
+      </Text>
+      {/* <TouchableOpacity style={styles.rentalsButton} onPress={{}}>
+        <View style={styles.buttonContent}>
+          <MaterialCommunityIcons
+            style={{ marginRight: 8 }}
+            name="heart"
+            color={COLORS.white}
+            size={20}
+          />
           <Text
             style={{
               color: "white",
-              textAlign: "center",
+              textAlign: "left",
               fontSize: 14,
               fontWeight: "bold",
             }}
           >
             {" "}
-            Logout
+            My favorite rentals
           </Text>
-        </TouchableOpacity>
-      </View>
-    </SafeAreaView>
+        </View>
+      </TouchableOpacity> */}
+      <TouchableOpacity
+        style={[styles.logoutButton, { backgroundColor: COLORS.blue }]}
+        onPress={handleSignOutPress}
+      >
+        <Text
+          style={{
+            color: "white",
+            textAlign: "center",
+            fontSize: 14,
+            fontWeight: "bold",
+          }}
+        >
+          {" "}
+          Logout
+        </Text>
+      </TouchableOpacity>
+    </>
   );
 };
 const styles = StyleSheet.create({

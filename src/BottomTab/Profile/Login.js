@@ -47,12 +47,13 @@ const Login = ({ onSignUpPress, onLoginSuccess }) => {
 
       const result = response.data;
       console.log(result);
-      if (result == 1) {
+      if (result.status == 1) {
         console.log("Login successful");
         setLoginResult("Login successful");
         await AsyncStorage.setItem("userEmail", username);
+        await AsyncStorage.setItem("userID", result.userid.toString());
         await AsyncStorage.setItem("isLoggedIn", "true");
-        onLoginSuccess(username);
+        onLoginSuccess();
       } else if (result == 2) {
         console.log("User not found");
         setLoginResult("User not found");

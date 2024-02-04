@@ -22,6 +22,7 @@ import styles from "./compare.style";
 import { Entypo } from "@expo/vector-icons";
 import { useNavigation } from "@react-navigation/native";
 import ViewDetailsOverlay from "../Modal/ViewDetailsOverlay";
+import { fetchNhoodData } from "../../API/api";
 
 const DetailsScreen = ({ route }) => {
   const { item } = route.params;
@@ -144,34 +145,6 @@ const ExpandableListItem = ({ item }) => {
   const toggleExpand = () => {
     setExpanded(!expanded);
   };
-  // const [expandedRentals, setExpandedRentals] = useState(false);
-  // const [filteredDataSource, setFilteredDataSource] = useState([]);
-  // const [masterDataSource, setMasterDataSource] = useState([]);
-
-  // useEffect(() => {
-  //     axios.get("http://myneighborhoodscope.com/rentalApi.php")
-  //         .then(response => { setFilteredDataSource(response.data); setMasterDataSource(response.data) })
-  //         .catch(error => { });
-  // }, []);
-
-  // const showRentals = (nhood) => {
-  //     //console.log(nhood);
-  //     setExpandedRentals(true);
-  //     var newData = masterDataSource;
-  //     newData = masterDataSource.filter((item) =>
-  //         item.neighborhood === nhood);
-  //     setFilteredDataSource(newData);
-  //     console.log(filteredDataSource);
-  // };
-
-  // const [isModalVisible, setIsModalVisible] = useState(false);
-  // const onAddSticker = () => {
-  //     setIsModalVisible(true);
-  //   };
-
-  //   const onModalClose = () => {
-  //     setIsModalVisible(false);
-  //   };
   return (
     <View style={styles.itemContainer}>
       <TouchableOpacity onPress={toggleExpand} style={styles.itemTouchable}>
@@ -319,13 +292,25 @@ const ExpandableList = ({ data }) => {
   const [masterDataSource, setMasterDataSource] = useState([]);
 
   useEffect(() => {
-    axios
-      .get("https://lacpalaganas.github.io/VS/neighborhood.json")
-      .then((response) => {
-        setFilteredDataSource(response.data);
-        setMasterDataSource(response.data);
-      })
-      .catch((error) => {});
+    // axios
+    //   .get("https://lacpalaganas.github.io/VS/neighborhood.json")
+    //   .then((response) => {
+    //     setFilteredDataSource(response.data);
+    //     setMasterDataSource(response.data);
+    //   })
+    //   .catch((error) => {});
+
+    const fetchData = async () => {
+      try {
+        const data = await fetchNhoodData();
+        setFilteredDataSource(data);
+        setMasterDataSource(data);
+      } catch (error) {
+        console.error("Error fetching nhood data: ", error);
+      }
+    };
+
+    fetchData();
   }, []);
 
   const jobTypes = ["Most Affordable", "Easiest Parking", "Near Downtown"];
@@ -335,24 +320,17 @@ const ExpandableList = ({ data }) => {
     var newData = masterDataSource;
     switch (item) {
       case "Most Affordable":
-        //alert("Most affordabble");
-        //    newData  = masterDataSource.filter((item) =>
-        //    Number(item.rent.replace(/[^0-9.-]+/g,"")) < 1800);
         newData = masterDataSource.filter((item) => item.mostAffordable === 1);
         break;
       case "Easiest Parking":
         //alert("Easisest Parking");
         newData = masterDataSource.filter((item) => item.easiestParking === 1);
-
-        //console.log(filteredDataSource);
         break;
       case "Near Downtown":
-        //alert("Near Downtown");
         newData = masterDataSource.filter((item) => item.nearDowntown === 1);
         break;
       case "":
       default:
-        //alert("-");
         setFilteredDataSource(masterDataSource);
         break;
     }

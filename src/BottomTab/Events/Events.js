@@ -13,77 +13,7 @@ import { COLORS, SIZES } from "../../../constants";
 import { useNavigation } from "@react-navigation/native";
 import { createStackNavigator } from "@react-navigation/stack";
 import styles from "./events.style";
-
-const Events = () => {
-  const renderItem = ({ item }) => <ExpandableItem item={item} />;
-  const [isLoading, setIsLoading] = useState(false);
-  const [filteredDataSource, setFilteredDataSource] = useState([]);
-
-  useEffect(() => {
-    fetchData();
-  }, []);
-  const fetchData = async () => {
-    try {
-      setIsLoading(true);
-      const response = await fetch(
-        "https://myneighborhoodscope.com/zipAdsJson.php"
-      );
-      const data = await response.json();
-
-      var newData = data.filter((x) => x.active === 1);
-      setFilteredDataSource(newData);
-      console.log(newData);
-      setIsLoading(false);
-    } catch (error) {
-      console.error("Error fetching data: ", error);
-    }
-  };
-  return (
-    <SafeAreaView style={{ flex: 1, backgroundColor: COLORS.lightWhite }}>
-      <View style={{ alignItems: "center", justifyContent: "center" }}>
-        <View
-          style={{
-            width: "80%",
-            padding: 10,
-            backgroundColor: "#007BFF",
-            marginTop: 20,
-            borderWidth: 1,
-            borderColor: "007BFF",
-            borderRadius: 6,
-          }}
-        >
-          <TouchableOpacity
-            onPress={() => {
-              fetchData();
-            }}
-          >
-            <Text style={{ color: "white", textAlign: "center", fontSize: 14 }}>
-              {" "}
-              {`Refresh`}
-            </Text>
-          </TouchableOpacity>
-        </View>
-      </View>
-      {isLoading ? (
-        <View style={{ justifyContent: "center", height: "100%" }}>
-          <ActivityIndicator size="large" color={COLORS.primary} />
-        </View>
-      ) : filteredDataSource.length != 0 ? (
-        <View style={[styles.container, { padding: SIZES.small }]}>
-          <FlatList
-            data={filteredDataSource}
-            renderItem={renderItem}
-            keyExtractor={(item) => item.id}
-          />
-        </View>
-      ) : (
-        <View style={{ justifyContent: "center", height: "100%" }}>
-          <Text style={{ textAlign: "center" }}>No Ads listed</Text>
-        </View>
-      )}
-    </SafeAreaView>
-  );
-};
+import { fetchAdsData } from "../../API/api";
 
 const ExpandableItem = ({ item }) => {
   const [expanded, setExpanded] = useState(false);
@@ -139,6 +69,71 @@ const ExpandableItem = ({ item }) => {
         </>
       )}
     </View>
+  );
+};
+
+const Events = () => {
+  const renderItem = ({ item }) => <ExpandableItem item={item} />;
+  const [isLoading, setIsLoading] = useState(false);
+  const [filteredDataSource, setFilteredDataSource] = useState([]);
+
+  useEffect(() => {
+    fetchData();
+  }, []);
+  const fetchData = async () => {
+    try {
+      setIsLoading(true);
+      const data = await fetchAdsData();
+
+      setFilteredDataSource(data);
+      //console.log(newData);
+      setIsLoading(false);
+    } catch (error) {
+      console.error("Error zip Ads data: ", error);
+    }
+  };
+  return (
+    <SafeAreaView style={styles.safeArea}>
+      <View style={{ alignItems: "center", justifyContent: "center" }}>
+        <View
+          style={{
+            width: "90%",
+            padding: 18,
+            backgroundColor: COLORS.primary,
+            marginTop: 20,
+
+            borderRadius: SIZES.small / 2,
+          }}
+        >
+          <TouchableOpacity
+            onPress={() => {
+              fetchData();
+            }}
+          >
+            <Text style={{ color: "white", textAlign: "center", fontSize: 14 }}>
+              {`Refresh`}
+            </Text>
+          </TouchableOpacity>
+        </View>
+      </View>
+      {isLoading ? (
+        <View style={{ justifyContent: "center", height: "100%" }}>
+          <ActivityIndicator size="large" color={COLORS.primary} />
+        </View>
+      ) : filteredDataSource.length != 0 ? (
+        <View style={[styles.container, { padding: SIZES.small }]}>
+          <FlatList
+            data={filteredDataSource}
+            renderItem={renderItem}
+            keyExtractor={(item) => item.id}
+          />
+        </View>
+      ) : (
+        <View style={{ justifyContent: "center", height: "100%" }}>
+          <Text style={{ textAlign: "center" }}>No Ads listed</Text>
+        </View>
+      )}
+    </SafeAreaView>
   );
 };
 

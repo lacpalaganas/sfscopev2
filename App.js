@@ -15,6 +15,7 @@ import "react-native-gesture-handler";
 import RentalDetails from "./src/Components/RentalDetails/RentalDetails";
 import Profile from "./src/BottomTab/Profile/Profile";
 import ViewProfile from "./src/BottomTab/Profile/ViewProfile";
+import AllRentals from "./src/Components/RentalDetails/AllRentals";
 
 const Tab = createBottomTabNavigator();
 const Stack = createStackNavigator();
@@ -83,7 +84,7 @@ function TabNavigator() {
       />
       <Tab.Screen
         name="Profile"
-        component={ViewProfile}
+        component={Profile}
         options={{
           tabBarLabel: "Profile",
           headerTitleAlign: "center",
@@ -110,6 +111,7 @@ const RentalsStack = () => {
           headerShadowVisible: false,
           headerTintColor: COLORS.lightWhite,
           headerShown: false,
+          //headerTitleStyle: { fontSize:  },
           // headerLeft: () => (<ScreenHeaderBtn iconUrl={icons.menu} dimension="60%"/>),
           //headerRight: () => (<ScreenHeaderBtn iconUrl={images.compare} dimension="100%" handlePress={() => router.push(`/compare/`)}/>),
         }}
@@ -117,7 +119,18 @@ const RentalsStack = () => {
       <Stack.Screen
         name="View Rentals"
         component={RentalDetails}
-        r
+        options={{
+          headerStyle: { backgroundColor: COLORS.secondary },
+          headerShadowVisible: false,
+          headerTintColor: COLORS.lightWhite,
+          headerTitleStyle: { fontSize: 22 },
+          // headerLeft: () => (<ScreenHeaderBtn iconUrl={icons.menu} dimension="60%"/>),
+          //headerRight: () => (<ScreenHeaderBtn iconUrl={images.compare} dimension="100%" handlePress={() => router.push(`/compare/`)}/>),
+        }}
+      />
+      <Stack.Screen
+        name="All Rentals"
+        component={AllRentals}
         options={{
           headerStyle: { backgroundColor: COLORS.secondary },
           headerShadowVisible: false,
@@ -149,6 +162,18 @@ const StackNavigator = () => {
       <Stack.Screen
         name="View Rentals"
         component={RentalDetails}
+        options={{
+          headerStyle: { backgroundColor: COLORS.secondary },
+          headerShadowVisible: false,
+          headerTintColor: COLORS.lightWhite,
+          // headerLeft: () => (<ScreenHeaderBtn iconUrl={icons.menu} dimension="60%"/>),
+          //headerRight: () => (<ScreenHeaderBtn iconUrl={images.compare} dimension="100%" handlePress={() => router.push(`/compare/`)}/>),
+        }}
+      />
+
+      <Stack.Screen
+        name="All Rentals"
+        component={AllRentals}
         options={{
           headerStyle: { backgroundColor: COLORS.secondary },
           headerShadowVisible: false,
