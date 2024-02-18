@@ -20,7 +20,11 @@ import { ScrollView } from "react-native-gesture-handler";
 import { useNavigation } from "@react-navigation/native";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 import AsyncStorage from "@react-native-async-storage/async-storage";
-import { fetchAllRentals } from "../../API/api";
+import {
+  fetchAllRentals,
+  checkIsFavorite,
+  handleFavorite,
+} from "../../API/api";
 
 // Function to render each image
 const renderImage = ({ item }) => (
@@ -33,17 +37,17 @@ const ExpandableRentalsItem = ({ item, showFavorite, userId }) => {
   const [imagesObject, setImagesObbject] = useState();
   const [isFavorite, setIsFavorite] = useState(false);
   const [showFavorites, setShowFavorites] = useState(showFavorite);
-  const [rentalId, setRentalId] = useState(item.id);
+  const rentalId = item.id;
 
   const toggleExpand = () => {
     setExpanded(!expanded);
+    checkFavorite(userId, rentalId);
   };
 
   useEffect(() => {
     getRentalImages();
     //checkLoginStatus();
-    handlePress();
-  }, []);
+  }, [userId, rentalId]);
 
   const getRentalImages = () => {
     const nonNullPhotos = Object.keys(item)
@@ -64,20 +68,24 @@ const ExpandableRentalsItem = ({ item, showFavorite, userId }) => {
     //setImages(["https://buffer.com/cdn-cgi/image/w=1000,fit=contain,q=90,f=auto/library/content/images/size/w1200/2023/10/free-images.jpg","https://media.istockphoto.com/id/1322277517/photo/wild-grass-in-the-mountains-at-sunset.jpg?s=612x612&w=0&k=20&c=6mItwwFFGqKNKEAzv0mv6TaxhLN3zSE43bWmFN--J5w="]);
   };
   // Function to handle pressing the heart icon
-  const handlePress = async () => {
+  //check favorite
+  const checkFavorite = async (userId, rentalId) => {
     try {
-      const formData = new FormData();
-      formData.append("userId", userId);
-      formData.append("rentalId", rentalId);
-      const response = await fetch(
-        "https://myneighborhoodscope.com/favorites.php"
-      );
-      const data = await response.json();
+      const data = await checkIsFavorite(userId, rentalId);
       console.log(data);
-      // Assuming the response is an object with a property 'isFavorite' indicating whether it's favorited or not
-      setIsFavorite(data === 1); // Update the state based on the response
+      setIsFavorite(data === 1);
     } catch (error) {
-      console.error("Error fetching favorites:", error);
+      console.error("Error checking favorites:", error);
+    }
+  };
+  const handlePressFavorite = async () => {
+    try {
+      console.log(userId + " - " + rentalId);
+      const data = await handleFavorite(userId, rentalId);
+      checkFavorite(userId, rentalId);
+      console.log("handle press");
+    } catch (error) {
+      console.error("Error handling favorites:", error);
     }
   };
   return (
@@ -96,12 +104,12 @@ const ExpandableRentalsItem = ({ item, showFavorite, userId }) => {
       {expanded && (
         <>
           {showFavorites && (
-            <TouchableOpacity onPress={handlePress}>
+            <TouchableOpacity onPress={handlePressFavorite}>
               <View>
                 <MaterialCommunityIcons
-                  name={isFavorite ? "heart" : "heart-outline"}
+                  name={isFavorite ? "star" : "star-outline"}
                   size={30}
-                  color={isFavorite ? "red" : "black"}
+                  color={isFavorite ? "gold" : "black"}
                 />
               </View>
             </TouchableOpacity>

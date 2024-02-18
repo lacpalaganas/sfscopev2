@@ -36,7 +36,7 @@ function TabNavigator() {
           headerBackgroundContainerStyle: { backgroundColor: "red" },
           backgroundColor: COLORS.primary,
           tabBarLabel: "Home",
-
+          unmountOnBlur: true,
           tabBarIcon: ({ color }) => (
             <MaterialCommunityIcons name="home" color={color} size={26} />
           ),
@@ -73,6 +73,7 @@ function TabNavigator() {
         options={{
           headerTitleAlign: "center",
           tabBarLabel: "Ads",
+          unmountOnBlur: true,
           tabBarIcon: ({ color }) => (
             <MaterialCommunityIcons
               name="advertisements"
@@ -88,6 +89,7 @@ function TabNavigator() {
         options={{
           tabBarLabel: "Profile",
           headerTitleAlign: "center",
+          unmountOnBlur: true,
           tabBarIcon: ({ color }) => (
             <MaterialCommunityIcons
               name="account-box"
@@ -111,6 +113,7 @@ const RentalsStack = () => {
           headerShadowVisible: false,
           headerTintColor: COLORS.lightWhite,
           headerShown: false,
+          unmountOnBlur: true,
           //headerTitleStyle: { fontSize:  },
           // headerLeft: () => (<ScreenHeaderBtn iconUrl={icons.menu} dimension="60%"/>),
           //headerRight: () => (<ScreenHeaderBtn iconUrl={images.compare} dimension="100%" handlePress={() => router.push(`/compare/`)}/>),
@@ -124,6 +127,7 @@ const RentalsStack = () => {
           headerShadowVisible: false,
           headerTintColor: COLORS.lightWhite,
           headerTitleStyle: { fontSize: 22 },
+          unmountOnBlur: true,
           // headerLeft: () => (<ScreenHeaderBtn iconUrl={icons.menu} dimension="60%"/>),
           //headerRight: () => (<ScreenHeaderBtn iconUrl={images.compare} dimension="100%" handlePress={() => router.push(`/compare/`)}/>),
         }}
@@ -135,6 +139,7 @@ const RentalsStack = () => {
           headerStyle: { backgroundColor: COLORS.secondary },
           headerShadowVisible: false,
           headerTintColor: COLORS.lightWhite,
+          unmountOnBlur: true,
           // headerLeft: () => (<ScreenHeaderBtn iconUrl={icons.menu} dimension="60%"/>),
           //headerRight: () => (<ScreenHeaderBtn iconUrl={images.compare} dimension="100%" handlePress={() => router.push(`/compare/`)}/>),
         }}
@@ -154,6 +159,7 @@ const StackNavigator = () => {
           headerShadowVisible: false,
           headerTintColor: COLORS.lightWhite,
           headerShown: false,
+          unmountOnBlur: true,
           // headerLeft: () => (<ScreenHeaderBtn iconUrl={icons.menu} dimension="60%"/>),
           //headerRight: () => (<ScreenHeaderBtn iconUrl={images.compare} dimension="100%" handlePress={() => router.push(`/compare/`)}/>),
         }}
@@ -166,6 +172,7 @@ const StackNavigator = () => {
           headerStyle: { backgroundColor: COLORS.secondary },
           headerShadowVisible: false,
           headerTintColor: COLORS.lightWhite,
+          unmountOnBlur: true,
           // headerLeft: () => (<ScreenHeaderBtn iconUrl={icons.menu} dimension="60%"/>),
           //headerRight: () => (<ScreenHeaderBtn iconUrl={images.compare} dimension="100%" handlePress={() => router.push(`/compare/`)}/>),
         }}
@@ -178,6 +185,7 @@ const StackNavigator = () => {
           headerStyle: { backgroundColor: COLORS.secondary },
           headerShadowVisible: false,
           headerTintColor: COLORS.lightWhite,
+          unmountOnBlur: true,
           // headerLeft: () => (<ScreenHeaderBtn iconUrl={icons.menu} dimension="60%"/>),
           //headerRight: () => (<ScreenHeaderBtn iconUrl={images.compare} dimension="100%" handlePress={() => router.push(`/compare/`)}/>),
         }}

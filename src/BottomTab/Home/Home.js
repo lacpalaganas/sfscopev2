@@ -70,6 +70,12 @@ const Home = () => {
   //   checkLoginStatus();
   // }, []); // The empty
 
+  // useEffect(() => {
+  //   const checkLoginStatus = async () => {};
+
+  //   checkLoginStatus();
+  // }, []); // The empty
+
   return (
     <SafeAreaView style={{ flex: 1, backgroundColor: COLORS.lightWhite }}>
       <StatusBar backgroundColor="white" barStyle="dark-content" />

@@ -64,10 +64,50 @@ async function fetchAdsData() {
   }
 }
 
+async function checkIsFavorite(userId, rentalId) {
+  try {
+    console.log("from checkIsFavorite  api: " + userId + "-" + rentalId);
+    const formData = new FormData();
+    formData.append("userId", userId);
+    formData.append("rentalId", rentalId);
+
+    const response = await fetch(`${API_BASE_URL}/checkFavorites.php`, {
+      method: "POST", // Assuming you are making a POST request
+      body: formData,
+    });
+    const data = await response.json();
+    return data;
+  } catch (error) {
+    console.error("Error checking favorite", error);
+    throw error;
+  }
+}
+
+async function handleFavorite(userId, rentalId) {
+  try {
+    console.log("from handleFavorite  api: " + userId + "-" + rentalId);
+    const formData = new FormData();
+    formData.append("userId", userId);
+    formData.append("rentalId", rentalId);
+
+    const response = await fetch(`${API_BASE_URL}/favorites.php`, {
+      method: "POST", // Assuming you are making a POST request
+      body: formData,
+    });
+    const data = await response.json();
+    return data;
+  } catch (error) {
+    console.error("Error handling favorites:", error);
+    throw error;
+  }
+}
+
 export {
   fetchRentalsData,
   fetchRentalsByID,
   fetchNhoodData,
   fetchAdsData,
   fetchAllRentals,
+  checkIsFavorite,
+  handleFavorite,
 };
